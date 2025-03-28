@@ -25,7 +25,6 @@ public class FileProcessor {
     public FileProcessor(String path) {
         setData(path);
     }
-
     // Setter
     public void setData(String path) {
         this.path = path;
@@ -79,6 +78,7 @@ public class FileProcessor {
     }
 
 
+    // CLOSING 
     public void closeReadFile() {
         myScanner.close();
     }
