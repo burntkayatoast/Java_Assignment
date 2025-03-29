@@ -199,5 +199,3 @@ On,Weak,Active,Running,Yes
 On,Weak,Active,Stopped,Yes
 On,Weak,Inactive,Running,Yes
 On,Weak,Inactive,Stopped,No
-on,weak,inactive,stopped,no
-on,weak,inactive,stopped,yes
