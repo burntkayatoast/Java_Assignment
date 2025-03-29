@@ -18,10 +18,6 @@ public class Predictor {
     public Predictor(ArrayList<Features> dataset) {
         setDataset(dataset);
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> ac14605a6ab4641b73421f2d42d896a80d41a521
     // setter
     public void setDataset(ArrayList<Features> dataset) {
         this.dataset = dataset;
@@ -31,16 +27,10 @@ public class Predictor {
         return dataset;
     }
 
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> ac14605a6ab4641b73421f2d42d896a80d41a521
     // method to add new row of data
     public void addData(Features newData) {
         this.dataset.add(newData);
     }
-<<<<<<< HEAD
 
     // prediction for the label based on the features
     public String predict(String powerStatus, String networkSignal, String activity, String backgroundProcesses) {
@@ -73,7 +63,5 @@ public class Predictor {
          }
     }
 
-=======
->>>>>>> ac14605a6ab4641b73421f2d42d896a80d41a521
 }
 
