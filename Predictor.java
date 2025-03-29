@@ -66,7 +66,6 @@ public class Predictor {
 
     // method for recalculation
     public void recalculateClassifier() {
-        System.out.println("recalculateClassifier method is called."); 
         int totalYes = 0;
         int totalNo = 0;
 
