@@ -15,7 +15,11 @@ public class Features {
     private String DeviceIsOnline; // label
 
     // Constructor
+<<<<<<< HEAD
     public Features(String powerStatus, String networkSignal, String activity, String backgroundProcesses, String DeviceIsOnline) {
+=======
+    public Features(String powerStatus, String networkSignal, String activity, String BackgroundProcesses, String DeviceIsOnline) {
+>>>>>>> ac14605a6ab4641b73421f2d42d896a80d41a521
         setPowerStatus(powerStatus);
         setNetworkSignal(networkSignal);
         setActivity(activity);
@@ -57,5 +61,8 @@ public class Features {
         return DeviceIsOnline;
     }
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> ac14605a6ab4641b73421f2d42d896a80d41a521
 }
