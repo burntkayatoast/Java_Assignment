@@ -30,6 +30,7 @@ public class Predictor {
     // method to add new row of data
     public void addData(Features newData) {
         this.dataset.add(newData);
+        System.out.println("\ndataset size: " + dataset.size() + " rows");
     }
 
     // prediction for the label based on the features
@@ -51,9 +52,9 @@ public class Predictor {
             }
          }
 
-        // Debugging: Print the final counts
-        // System.out.println("Final Yes Count: " + yesCount);
-        // System.out.println("Final No Count: " + noCount);
+        //  prints the final counts
+        System.out.println("\nYes Count: " + yesCount);
+        System.out.println("No Count: " + noCount);
 
          // compares the counts and returns the label with the higher count
          if (yesCount >= noCount ) {
@@ -61,6 +62,26 @@ public class Predictor {
          } else {
             return "No";
          }
+    }
+
+    // method for recalculation
+    public void recalculateClassifier() {
+        int totalYes = 0;
+        int totalNo = 0;
+
+        // checks iif the labels are a yes or a no
+        for (Features row : dataset) {
+            if (row.getDeviceIsOnline().equalsIgnoreCase("yes")) {
+                totalYes++;
+            } else if (row.getDeviceIsOnline().equalsIgnoreCase("no")) {
+                totalNo++;
+            }
+        }
+
+        //  prints out the total number of yesses and no's
+
+        System.out.println("\nFinal Yes: " + totalYes);
+        System.out.println("Final No: " + totalNo);
     }
 
 }

@@ -31,6 +31,7 @@ public class GUI extends JFrame implements ActionListener {
     private JButton trainDataButton;
     private JButton evaluateAccuracyButton;
     private JButton clearButton;
+    private JButton recalculateButton;
     
     private JTextField powerStatusField;
     private JTextField networksignalField;
@@ -68,6 +69,7 @@ public class GUI extends JFrame implements ActionListener {
         trainDataButton = new JButton("Train data");
         evaluateAccuracyButton = new JButton("Evaluate accuracy");
         clearButton = new JButton("Clear Fields");
+        recalculateButton = new JButton("recalculate");
 
         // creating the textfields
         powerStatusField = new JTextField("");
@@ -103,6 +105,7 @@ public class GUI extends JFrame implements ActionListener {
         trainDataButton.addActionListener(this);
         evaluateAccuracyButton.addActionListener(this);
         clearButton.addActionListener(this);
+        recalculateButton.addActionListener(this);
 
         // adding the components to Frame
         add(powerStatusLabel);
@@ -118,6 +121,7 @@ public class GUI extends JFrame implements ActionListener {
         add(addDataButton);
         add(predictButton);
         add(clearButton); 
+        add(recalculateButton);
 
         setVisible(true);
     }
@@ -152,7 +156,7 @@ public class GUI extends JFrame implements ActionListener {
             fileProcessor.getFileWriter();
             fileProcessor.writeLineToFile(String.join(",", powerStatus, networkSignal, activity, backgroundProcesses, deviceStatus));
             fileProcessor.closeWriteFile();
-
+            
             JOptionPane.showMessageDialog(this, "new row added to the csv file!");
 
         } else if (event.getSource() == predictButton) {
@@ -172,7 +176,7 @@ public class GUI extends JFrame implements ActionListener {
                 return;
             }
 
-            // Debugging input values bc something is nawt right
+            // Debugging input values bc something is not right
             // System.out.println("Predicting label for:");
             // System.out.println("PowerStatus: " + powerStatus);
             // System.out.println("NetworkSignal: " + networkSignal);
@@ -192,6 +196,8 @@ public class GUI extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, "The Accuracy of the predictor is [percentage value here]");
 
             // trains the predictor on 150 rows of the data and tests the data on 50 rows (each of the rows are automatically put through the rules and the predictive output automatically matched with the actual label)
+        } else if (event.getSource() == recalculateButton) {
+            predictor.recalculateClassifier();
         } else {
             // clear button
             powerStatusField.setText("");

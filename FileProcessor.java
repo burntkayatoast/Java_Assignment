@@ -73,8 +73,8 @@ public class FileProcessor {
     
     // WRITING to file 
     public void writeLineToFile(String line) {
-        System.out.println(line); 
-        pw.println(line); // writes line to file
+        System.out.println("Row added: " + line);
+        pw.println(line); 
     }
 
 
