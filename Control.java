@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /*****************************************************************************
  * Program Description: OOP assignment 2025. 
  *  Building a Java application of a maching learning classifier based on the naive bayes classifier. 
@@ -12,20 +10,6 @@ import java.util.ArrayList;
 
 public class Control {
     public static void main(String[] args) {
-        FileProcessor fileManager = new FileProcessor("device_status_dataset.csv");
-        // connecting to file
-        fileManager.connectFile();
-        fileManager.getFileWriter();
-
-        // writing to file
-        fileManager.writeLineToFile("On,Strong,Active,Running,No");
-        fileManager.closeWriteFile();
-
-        // printing out the results
-        ArrayList<String> lines = fileManager.readFile();
-        for (String line : lines) {
-            System.out.println(line);
-        }
-        
+        GUI gui = new GUI("Predictor-inator");
     }
 }

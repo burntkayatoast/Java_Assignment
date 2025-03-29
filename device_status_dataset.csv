@@ -1,4 +1,4 @@
-Power Status,Network Signal Strength,Recent User Activity,Background Processes,DeviceIsOnline
+Power Status,Network Signal Strength,Activity,Background Processes,DeviceIsOnline
 On,Strong,Active,Running,Yes
 On,Strong,Active,Stopped,Yes
 On,Strong,Inactive,Running,Yes
