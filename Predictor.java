@@ -30,7 +30,6 @@ public class Predictor {
     // method to add new row of data
     public void addData(Features newData) {
         this.dataset.add(newData);
-        System.out.println("\ndataset size: " + dataset.size() + " rows");
     }
 
     // prediction for the label based on the features
@@ -53,8 +52,8 @@ public class Predictor {
          }
 
         //  prints the final counts
-        System.out.println("\nYes Count: " + yesCount);
-        System.out.println("No Count: " + noCount);
+        System.out.println("\nYes Count (for matching rows): " + yesCount);
+        System.out.println("No Count (for matching rows): " + noCount);
 
          // compares the counts and returns the label with the higher count
          if (yesCount >= noCount ) {
@@ -65,7 +64,7 @@ public class Predictor {
     }
 
     // method for recalculation
-    public void recalculateClassifier() {
+    public void calculateClassifier() {
         int totalYes = 0;
         int totalNo = 0;
 
@@ -79,8 +78,8 @@ public class Predictor {
         }
 
         //  prints out the total number of yesses and no's
-
-        System.out.println("\nTotal Yes (in the dataset): " + totalYes);
+        System.out.println("\nDataset size: " + (dataset.size()-1) + " rows"); // -1 to exclude the heading titles in the csv
+        System.out.println("Total Yes (in the dataset): " + totalYes);
         System.out.println("Total No (in the dataset): " + totalNo);
     }
 
