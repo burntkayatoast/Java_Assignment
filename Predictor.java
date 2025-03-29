@@ -53,8 +53,8 @@ public class Predictor {
          }
 
         //  prints the final counts
-        System.out.println("\nYes Count: " + yesCount);
-        System.out.println("No Count: " + noCount);
+        System.out.println("\nYes Count (for matching rows): " + yesCount);
+        System.out.println("No Count (for matching rows: " + noCount);
 
          // compares the counts and returns the label with the higher count
          if (yesCount >= noCount ) {
@@ -80,8 +80,8 @@ public class Predictor {
 
         //  prints out the total number of yesses and no's
 
-        System.out.println("\nFinal Yes: " + totalYes);
-        System.out.println("Final No: " + totalNo);
+        System.out.println("\nFinal Yes (total in dataset): " + totalYes);
+        System.out.println("Final No (total in dataset): " + totalNo);
     }
 
 }
