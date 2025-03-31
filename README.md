@@ -7,6 +7,7 @@
 3. Features
 4. Predictor
 5. GUI
+6. ActionHandler
 
 ---
 ### 1. Control.java
@@ -45,4 +46,24 @@ Handles the logic of predicting whether a device is online based on the features
 **Main Methods:**
 - `predict()`: compares inputted features with dataset rows, counts the occurences of yes/no labels and returns the most frequent label as the predicted outcome.
 - `recalculateClassifier()`: counts the total yes/no labels in the dataset and updates when new data is added. 
-  
+[add training and accuracy later]
+---
+### 5. GUI.java
+**Purpose:**
+Provides an interface for interacting with the program. It lets users input data for the four features and the label, make predictions, recalculates the totals, trains the model and evaluates the accuracy of the predictor.
+<br><br>
+**Main Methods:**
+- `setupFileProcessor()`: intializes FileProcessor and Predictor (loads in dataset from the csv).
+- `actionPerformed()`: Handles the button clicks.
+- `createTextField()` / `createButton()`: methods hat help create the components.
+- `setupFields()` / `setupLabels()` / `setupbuttons()` /  `setupFrame()`: methods that sets up the components.
+- `addToFrame()`: adds the components to the GUI.
+- `clearTextFields()`: clears existing data from the fields so user may enter new data.
+---
+### 6. ActionHandler.java
+**Purpose:**
+Handles triggered actions made by the user when clicking on a button from the GUI. 
+<br><br>
+-  `dataHandling()`: validates the input fields, creates a feature object and appends the data to the dataset.
+-  `predictionHandling()`: passes user input to the `predict()` method and displays the result.
+[add training and accuracy later]
