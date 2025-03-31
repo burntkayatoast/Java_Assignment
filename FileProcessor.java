@@ -40,23 +40,28 @@ public class FileProcessor {
     // READING the file
     public ArrayList<String> readFile() {
         // initialising an ArrayList to store the contents fo the csv file
-        ArrayList<String> line = new ArrayList<>();
+        ArrayList<String> lines = new ArrayList<>();
 
         try {
             myScanner = new Scanner(file);
+            boolean ifHeader = true; 
             
             // reading lines from the csv then adding it to the ArrayList
             while(myScanner.hasNextLine()) {
-                line.add(myScanner.nextLine());
+                String line = myScanner.nextLine();
+                // skips the 1st row of the csv file since it's the headers
+                if (ifHeader) {
+                    ifHeader = false;
+                    continue;
+                }
+                lines.add(line);
             }
-
             myScanner.close();
 
         } catch (FileNotFoundException e) {
             System.out.println("Error: file not found ");
         }
-
-        return line;
+        return lines;
     }
 
     
@@ -69,7 +74,6 @@ public class FileProcessor {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
     
     // WRITING to file 
     public void writeLineToFile(String line) {
