@@ -12,27 +12,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JOptionPane;
 
-public class ActionHandler {
-    private Predictor predictor;
-    private FileProcessor fileProcessor;
-    private GUI gui;
-
+public class ActionHandler extends Handler {
     // constructor
-    public ActionHandler (Predictor predictor, FileProcessor fileProcessor, GUI gui) {
-        setPredictor(predictor);
-        setFileProcessor(fileProcessor);
-        setGui(gui);
-    }
-
-    // setters
-    public void setPredictor(Predictor predictor) {
-        this.predictor = predictor;
-    }
-    public void setFileProcessor(FileProcessor fileProcessor) {
-        this.fileProcessor = fileProcessor;
-    }
-    public void setGui(GUI gui) {
-        this.gui = gui;
+    public ActionHandler(Predictor predictor, FileProcessor fileProcessor, GUI gui) {
+        super(predictor, fileProcessor, gui);
     }
 
     // method that handles adding new rows of data to the data set
