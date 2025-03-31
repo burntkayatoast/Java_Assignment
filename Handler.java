@@ -21,11 +21,13 @@ public class Handler {
         this.gui = gui;
     }
 
+    // method to reload the dataset from the csv
     public ArrayList<Features> reloadDataset() {
         ArrayList<Features> fullDataset = new ArrayList<>();
+        // reads each row from the csv file
         for (String line : fileProcessor.readFile()) {
-            String[] parts = line.split(",");
-            fullDataset.add(new Features(parts[0], parts[1], parts[2], parts[3], parts[4]));
+            String[] parts = line.split(","); // splits them into an array based on teh commas
+            fullDataset.add(new Features(parts[0], parts[1], parts[2], parts[3], parts[4])); // creates featurew object using the values and adds them into the dataset
         }
         return fullDataset;
     }
