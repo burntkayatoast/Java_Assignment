@@ -18,6 +18,7 @@ public class Predictor {
     public Predictor(ArrayList<Features> dataset) {
         setDataset(dataset);
     }
+
     // setter
     public void setDataset(ArrayList<Features> dataset) {
         this.dataset = dataset;
@@ -26,21 +27,20 @@ public class Predictor {
     public ArrayList<Features> getDataset() {
         return dataset;
     }
-
     // method to add new row of data
     public void addData(Features newData) {
         this.dataset.add(newData);
     }
 
-    // prediction for the label based on the features
+
+    // predicts the label based on the features inputted by the user
     public String predict(String powerStatus, String networkSignal, String activity, String backgroundProcesses) {
         int yesCount = 0;
         int noCount = 0;
-
         
-        // iterates through the dataset
+        // iterates through the dataset to find rows that match the given features
         for (Features row : dataset) {
-            // checks if the row matches the features
+            // checks if the current row matches the given features 
             if (row.getPowerStatus().equalsIgnoreCase(powerStatus) &&  row.getNetworkSignal().equalsIgnoreCase(networkSignal) && row.getActivity().equalsIgnoreCase(activity) && row.getBackgroundProcesses().equalsIgnoreCase(backgroundProcesses)) {
                 // checking the label and incrementing the counters
                 if (row.getDeviceIsOnline().equalsIgnoreCase("yes")) {
@@ -51,24 +51,34 @@ public class Predictor {
             }
          }
 
-        //  prints the final counts
-        System.out.println("\nYes Count (for matching rows): " + yesCount);
-        System.out.println("No Count (for matching rows): " + noCount);
+        //  prints counts for yes/no
+        System.out.println("\n=== Prediction Counts for matching rows ===");
+        System.out.println("Yes Count: " + yesCount);
+        System.out.println("No Count: " + noCount);
+        System.out.println("\n");
 
-         // compares the counts and returns the label with the higher count
-         if (yesCount >= noCount ) {
+        // compares the counts and returns the label with the higher count
+        if (yesCount >= noCount ) {
             return "Yes";
-         } else {
+        } else {
             return "No";
-         }
+        }
     }
 
-    // method for recalculation
-    public void calculateClassifier() {
+    // method for recalculation of the classifier after adding new data to the dataset
+    public void calculate(FileProcessor fileProcessor) {
+        // reloads main dataset
+        ArrayList<Features> mainDataset = new ArrayList<>();
+        for (String line : fileProcessor.readFile()) {
+            String[] part = line.split(",");
+            mainDataset.add(new Features(part[0], part[1], part[2], part[3], part[4]));
+        }
+        setDataset(mainDataset); // updates the predictors dataset with the reloaded dataset
+
         int totalYes = 0;
         int totalNo = 0;
 
-        // checks iif the labels are a yes or a no
+        // iterates through the dataset to count the labels
         for (Features row : dataset) {
             if (row.getDeviceIsOnline().equalsIgnoreCase("yes")) {
                 totalYes++;
@@ -78,9 +88,9 @@ public class Predictor {
         }
 
         //  prints out the total number of yesses and no's
-        System.out.println("\nDataset size: " + (dataset.size()-1) + " rows"); // -1 to exclude the heading titles in the csv
-        System.out.println("Total Yes (in the dataset): " + totalYes);
-        System.out.println("Total No (in the dataset): " + totalNo);
+        System.out.println("\n=== Total rows & yes/no counts in the dataset ===");
+        System.out.println("Dataset size: " + dataset.size() + " rows");
+        System.out.println("Total Yes: " + totalYes);
+        System.out.println("Total No: " + totalNo);
     }
-
 }
