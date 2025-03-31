@@ -57,4 +57,7 @@ public class Features {
         return DeviceIsOnline;
     }
 
+    public String toString() {
+        return powerStatus + ", " + networkSignal + ", " + activity + ", " + backgroundProcesses + ", " + DeviceIsOnline;
+    }
 }
