@@ -112,7 +112,7 @@ public class GUI extends JFrame implements ActionListener {
         addDataButton.setActionCommand("addData");
         predictButton.setActionCommand("predict");
         trainDataButton.setActionCommand("train");
-        evaluateAccuracyButton.setActionCommand("evaluate");
+        evaluateAccuracyButton.setActionCommand("accuracy");
         calculateButton.setActionCommand("calculate");
         clearButton.setActionCommand("clear");
     }
@@ -135,6 +135,8 @@ public class GUI extends JFrame implements ActionListener {
         add(addDataButton);
         add(predictButton);
         add(calculateButton);
+        add(trainDataButton);
+        add(evaluateAccuracyButton);
         add(clearButton);
 
         setVisible(true); 
@@ -204,7 +206,7 @@ public class GUI extends JFrame implements ActionListener {
                 break;
 
             case "calculate":
-                predictor.calculateClassifier();
+                predictor.calculate(fileProcessor);
                 break;
         }
     } 
