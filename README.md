@@ -68,6 +68,7 @@ Provides an interface for interacting with the program. It lets users input data
 **Purpose:**
 Handles actions triggered by the user when clicking on a button from the GUI. 
 <br><br>
+**Main Methods:**
 -  `dataHandling()`: validates the input fields (if they've been filled), creates a feature object with the inputted data and appends it to the dataset.
 -  `predictionHandling()`: passes user input to the `predict()` method and displays the result.
 -  `accuracyHandling()`: calculates the accuracy of the predictor by splitting it 150 rows for training and 50 for testing.
