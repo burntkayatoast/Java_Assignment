@@ -76,9 +76,10 @@ Handles actions triggered by the user when clicking on a button from the GUI.
 ### 7. Handler.java
 **Purpose:**
 Class that Actionhandler.java inherits from to use its methods. It contains the method that uses the full dataset. 
+<br><br>
 **Main Methods:**
 - `reloadDataset()`: reads the dataset, processes each row, turns into a lsit of features.
-
+---
 ### Functionality that was included:
 All levels: 1-4 
 
