@@ -37,6 +37,7 @@ public class Predictor {
     public String predict(String powerStatus, String networkSignal, String activity, String backgroundProcesses) {
         int yesCount = 0;
         int noCount = 0;
+        int total = 0;
         
         // iterates through the dataset to find rows that match the given features
         for (Features row : dataset) {
@@ -57,17 +58,28 @@ public class Predictor {
         System.out.println("No Count: " + noCount);
         System.out.println("\n");
 
-        // compares the counts and returns the label with the higher count
-        if (yesCount >= noCount ) {
-            return "Yes";
+        // calculates the probabilities
+        total = yesCount + noCount;
+        float probabilityYes = ((float) yesCount / total) * 100;
+        float probabilityNo = ((float) noCount / total ) * 100;
+
+        //Return the result as a formatted string
+        if (yesCount >= noCount) {
+            System.out.println("Chances of 'DeviceIsOnline' being Yes: " + probabilityYes + "%");
         } else {
-            return "No";
+            System.out.println("Chances of 'DeviceIsOnline' being No: " + probabilityNo + "%");
+        }
+
+        if (yesCount >= noCount) {
+            return "yes " + probabilityYes + "%";
+        } else {
+            return "no " + probabilityNo + "%";
         }
     }
 
     // method for recalculation of the classifier after adding new data to the dataset
     public void calculate(FileProcessor fileProcessor) {
-        // reloads main dataset
+        // reloads main dataset (the one with 200 hundred rows bc if you click eval accuracy data then calculate, it counts the training data and not the main data with 200 rows)
         ArrayList<Features> mainDataset = new ArrayList<>();
         for (String line : fileProcessor.readFile()) {
             String[] part = line.split(",");
