@@ -9,7 +9,6 @@
  * Author: Renee Low
  *******************************************************************************/
 import java.util.ArrayList;
-import java.util.Collections;
 import javax.swing.JOptionPane;
 
 public class ActionHandler extends Handler {
@@ -62,7 +61,7 @@ public class ActionHandler extends Handler {
         
         // passes the values into the predict method in Predictor
         String prediction = predictor.predict(powerStatus, networkSignal, activity, backgroundProcesses);
-        JOptionPane.showMessageDialog(gui, "Prediction for if the Device if online: " + prediction);
+        JOptionPane.showMessageDialog(gui, "Prediction: " + prediction);
 
         // Debugging input values bc something is not right
         // System.out.println("Predicting label for:");
@@ -72,63 +71,96 @@ public class ActionHandler extends Handler {
         // System.out.println("BackgroundProcesses: " + backgroundProcesses);
     }
 
-    // method for training the predictor with 150 random rows of data from the dataset
-    public void trainingHandling() {
-        // gets the dataset from the predictor
-        ArrayList<Features> fullDataset = reloadDataset();
-        Collections.shuffle(fullDataset); // shufflin the dataset
-        // picks the first 150 rows from the shuffled dataset
-        ArrayList<Features> trainingData = new ArrayList<>(fullDataset.subList(0, 150));
-        predictor.setDataset(trainingData); // updates the predictor's data with the training data
-
-        // confirm that there are 150 rows that are random
-        System.out.println("Training data: "); {
-            for (int i = 0; i < trainingData.size(); i++) {
-                System.out.println("Row no. " + (i+1) + ": " + trainingData.get(i));
-            }
-        }
-
-        System.out.println("\n=== Training Data ===");
-        System.out.println("Total rows: " + trainingData.size()); 
-
-        int yes = 0, no = 0;
-        for (Features row : trainingData) {
-            if (row.getDeviceIsOnline().equalsIgnoreCase("yes")) yes++;
-            else no++;
-        }
-        System.out.println("Yes: " + yes + " | No: " + no);
-
-        JOptionPane.showMessageDialog(gui, "The predictor-inator is trained!");
-    }
-
     // method for calculating the accuracy o fthe predictor
     public void accuracyHandling() {
-        // reloads the original dataset 
+        // reloads datset to include any newly added rows
         ArrayList<Features> fullDataset = reloadDataset();
 
-        Collections.shuffle(fullDataset);
-        ArrayList<Features> trainingData = new ArrayList<>(fullDataset.subList(0, 150));
-        ArrayList<Features> testData = new ArrayList<>(fullDataset.subList(150, 200));
-
-        predictor.setDataset(trainingData); 
-
-        int correctPredictions = 0;
-        for (Features row : testData) {
-            String predictedLabel = predictor.predict(row.getPowerStatus(), row.getNetworkSignal(), row.getActivity(), row.getBackgroundProcesses());
-
-            String actualLabel = row.getDeviceIsOnline();
-
-            if (predictedLabel.equalsIgnoreCase(actualLabel)) {
-                correctPredictions++;
+        // goes through the dataset and categorizes rows based on labels. Yes adds to yesRows, No adds to noRows.
+        ArrayList<Features> yesRows = new ArrayList<>();
+        ArrayList<Features> noRows = new ArrayList<>();
+        for (Features row : fullDataset) {
+            if (row.getDeviceIsOnline().equalsIgnoreCase("yes")) {
+                yesRows.add(row);
+            } else {
+                noRows.add(row);
             }
         }
 
-        float accuracy = ((float) correctPredictions / testData.size()) * 100; // gets the percentage
+        // calulates the number of rows needed for training and testing.
+        int yesTrainSize = (int) (yesRows.size() * 0.75); 
+        int noTrainSize = (int) (noRows.size() * 0.75);
+
+        // creating training and testing sets
+        ArrayList<Features> trainingData = new ArrayList<>();
+        ArrayList<Features> testingData = new ArrayList<>();
+
+        // adds 75% of yes/no rows to the training set
+        trainingData.addAll(yesRows.subList(0, yesTrainSize));
+        trainingData.addAll(noRows.subList(0, noTrainSize));
+        // adds eth remaining yes/no rows into the testing data
+        testingData.addAll(yesRows.subList(yesTrainSize, yesRows.size()));
+        testingData.addAll(noRows.subList(noTrainSize, noRows.size()));
+
+        // train teh predictor
+        predictor.setDataset(trainingData);
+
+        int correctPredictions = 0;
+        System.out.println("\n=== Prediction Testing Details ===");
+
+        // goes through each row in the testitng data
+        for (Features row : testingData) {
+            // takes features of the current row in the testing dataset to make a prediction
+            String fullRow = predictor.predict(
+                row.getPowerStatus(), 
+                row.getNetworkSignal(), 
+                row.getActivity(), 
+                row.getBackgroundProcesses()
+            );
+            
+            // takes the label from teh predictor (if this isn't here, output is always 0 bc % is returned in predictor and i need to count the actual label only)
+            String predictedLabel = fullRow.split(" ")[0];
+            String actualLabel = row.getDeviceIsOnline();
+            
+            // debugging. Displays the features. prediction and actual label for the current row. 
+            System.out.println("Features: " + row.getPowerStatus() + ", " + row.getNetworkSignal() + 
+                              ", " + row.getActivity() + ", " + row.getBackgroundProcesses());
+            System.out.println("Prediction: '" + fullRow + "'");
+            System.out.println("Label: '" + predictedLabel + "', Actual: '" + actualLabel + "'");
+            
+            // compares just the label part with the actual label
+            boolean isCorrect = predictedLabel.equalsIgnoreCase(actualLabel);
+            System.out.println("Correct? " + isCorrect);
+            
+            if (isCorrect) {
+                correctPredictions++;
+            }
+            System.out.println("---");
+        }
+
+        float accuracy = ((float) correctPredictions / testingData.size()) * 100; // gets the percentage
         // outputting results
+        System.out.println("\n=== Data Separation Debugging ===");
+        System.out.println("Total rows in dataset: " + fullDataset.size());
+        System.out.println("Yes rows: " + yesRows.size());
+        System.out.println("No rows: " + noRows.size());
+        System.out.println("Training data size: " + trainingData.size());
+        System.out.println("Testing data size: " + testingData.size());
+        System.out.println("Yes rows in training: " + yesTrainSize);
+        System.out.println("No rows in training: " + noTrainSize);
+        System.out.println("Yes rows in testing: " + (yesRows.size() - yesTrainSize));
+        System.out.println("No rows in testing: " + (noRows.size() - noTrainSize));
+
+        System.out.println("\nProportion of 'Yes' in training: " + (yesTrainSize / (float) trainingData.size()) * 100 + "%");
+        System.out.println("Proportion of 'No' in training: " + (noTrainSize / (float) trainingData.size()) * 100 + "%");
+        System.out.println("Proportion of 'Yes' in testing: " + ((yesRows.size() - yesTrainSize) / (float) testingData.size()) * 100 + "%");
+        System.out.println("Proportion of 'No' in testing: " + ((noRows.size() - noTrainSize) / (float) testingData.size()) * 100 + "%");
+
         System.out.println("\n=== Prediction Accuracy ===");
         System.out.println("Correct Predictions: " + correctPredictions);
         System.out.println("Accuracy: " + accuracy + "%");
         JOptionPane.showMessageDialog(gui, "\nThe accuracy of the predictor is: " + String.format("%.2f", accuracy) + "%\n");
+
 
     }
 }
