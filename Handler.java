@@ -1,3 +1,11 @@
+/********************************************************************************
+ * Program Description: has a method that uses the full dataset
+ * Tasks:
+ *      - Provides a method to reload the full dataset from CSV
+ *      - Parent class for ActionHandler so that it can use its methods
+ * Date: 30/03/25
+ * Author: Renee Low
+ *******************************************************************************/
 import java.util.ArrayList;
 
 public class Handler {
@@ -24,11 +32,14 @@ public class Handler {
     // method to reload the dataset from the csv
     public ArrayList<Features> reloadDataset() {
         ArrayList<Features> fullDataset = new ArrayList<>();
+        
         // reads each row from the csv file
         for (String line : fileProcessor.readFile()) {
             String[] parts = line.split(","); // splits them into an array based on teh commas
-            fullDataset.add(new Features(parts[0], parts[1], parts[2], parts[3], parts[4])); // creates featurew object using the values and adds them into the dataset
+            fullDataset.add(new Features(parts[0], parts[1], parts[2], parts[3], parts[4])); // creates featurew object using the values and adds them into the list
         }
         return fullDataset;
     }
+
+    
 }
