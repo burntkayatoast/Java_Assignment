@@ -72,6 +72,7 @@ public class ActionHandler extends Handler {
     }
 
     // method for calculating the accuracy o fthe predictor
+    // splits the dataset into training and testing sublists, trainst he predictor on the training set, then compares the prediction's labels with the actual label
     public void accuracyHandling() {
         // reloads datset to include any newly added rows
         ArrayList<Features> fullDataset = reloadDataset();
@@ -118,8 +119,8 @@ public class ActionHandler extends Handler {
                 row.getBackgroundProcesses()
             );
             
-            // takes the label from teh predictor (if this isn't here, output is always 0 bc % is returned in predictor and i need to count the actual label only)
-            String predictedLabel = fullRow.split(" ")[0];
+            // takes the label from teh predictor
+            String predictedLabel = fullRow.split(" ")[0]; // splots the prediction row where there's a space, then takes the first element (the label part) and stores it
             String actualLabel = row.getDeviceIsOnline();
             
             // debugging. Displays the features. prediction and actual label for the current row. 
@@ -128,7 +129,7 @@ public class ActionHandler extends Handler {
             System.out.println("Prediction: '" + fullRow + "'");
             System.out.println("Label: '" + predictedLabel + "', Actual: '" + actualLabel + "'");
             
-            // compares just the label part with the actual label
+            // compares just the predictedlabel part with the actual label
             boolean isCorrect = predictedLabel.equalsIgnoreCase(actualLabel);
             System.out.println("Correct? " + isCorrect);
             
