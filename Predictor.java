@@ -63,13 +63,14 @@ public class Predictor {
         float probabilityYes = ((float) yesCount / total) * 100;
         float probabilityNo = ((float) noCount / total ) * 100;
 
-        //Return the result as a formatted string
+        // prints results
         if (yesCount >= noCount) {
             System.out.println("Chances of 'DeviceIsOnline' being Yes: " + probabilityYes + "%");
         } else {
             System.out.println("Chances of 'DeviceIsOnline' being No: " + probabilityNo + "%");
         }
 
+        // returns results
         if (yesCount >= noCount) {
             return "yes " + probabilityYes + "%";
         } else {
