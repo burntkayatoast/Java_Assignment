@@ -1,0 +1,17 @@
+﻿Power Status,Network Signal Strength,Recent User Activity,Background Processes,Yes,No
+off,Strong,active,running,0,12
+,Strong,active,stopped,0,12
+,Strong,inactive,running,0,12
+,Strong,inactive,stopped,0,12
+,weak,active,running,0,12
+,weak,active,stopped,0,12
+,weak,inactive,running,0,12
+,weak,inactive,stopped,0,12
+on,strong,active,running,13,0
+,strong,active,stopped,13,0
+,strong,inactive,running,13,0
+,strong,inactive,stopped,13,0
+,weak,active,running,13,0
+,weak,active,stopped,13,0
+,weak,inactive,running,13,0
+,weak,inactive,stopped,0,13
