@@ -5,7 +5,7 @@
 1. Control
 2. FileProcessor
 3. Features
-4. Predictor
+4. Predictor ***see Notes at the end!!**
 5. GUI
 6. ActionHandler
 7. Handler
@@ -79,6 +79,9 @@ Class that Actionhandler.java inherits from to use its methods. It contains the 
 <br><br>
 **Main Methods:**
 - `reloadDataset()`: reads the dataset, processes each row, turns into a lsit of features.
+---
+### Notes:
+- If you click the "evaluate accuracy" button first, then use the "predict" button, the yes/no label counts won't match the FREQ table because the predictor uses the training dataset instead of the full dataset. You need to click on "calculate" to reset it using the full dataset, then the predict button.  
 ---
 ### Functionality that was included:
 All levels: 1-4 
