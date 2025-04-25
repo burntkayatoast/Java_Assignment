@@ -41,6 +41,7 @@ public class ActionHandler extends Handler {
         fileProcessor.getFileWriter();
         fileProcessor.writeLineToFile(String.join(",", powerStatus, networkSignal, activity, backgroundProcesses, deviceStatus));
         fileProcessor.closeWriteFile();
+        fileProcessor.closeReadFile();
 
         // displays a message when new data is added
         JOptionPane.showMessageDialog(gui, "New row added to the CSV file!");
@@ -162,6 +163,6 @@ public class ActionHandler extends Handler {
         System.out.println("Accuracy: " + accuracy + "%");
         JOptionPane.showMessageDialog(gui, "\nThe accuracy of the predictor is: " + String.format("%.2f", accuracy) + "%\n");
 
-
+        fileProcessor.closeReadFile();
     }
 }

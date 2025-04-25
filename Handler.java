@@ -38,6 +38,8 @@ public class Handler {
             String[] parts = line.split(","); // splits them into an array based on teh commas
             fullDataset.add(new Features(parts[0], parts[1], parts[2], parts[3], parts[4])); // creates featurew object using the values and adds them into the list
         }
+        fileProcessor.closeReadFile();
+
         return fullDataset;
     }
 

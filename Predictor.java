@@ -86,7 +86,7 @@ public class Predictor {
             String[] part = line.split(",");
             mainDataset.add(new Features(part[0], part[1], part[2], part[3], part[4]));
         }
-        setDataset(mainDataset); // updates the predictors dataset with the reloaded dataset
+        setDataset(mainDataset); // updates the predictors dataset with the reloaded 200 row dataset
 
         int totalYes = 0;
         int totalNo = 0;
@@ -105,5 +105,7 @@ public class Predictor {
         System.out.println("Dataset size: " + dataset.size() + " rows");
         System.out.println("Total Yes: " + totalYes);
         System.out.println("Total No: " + totalNo);
+
+        fileProcessor.closeReadFile();
     }
 }
