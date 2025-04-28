@@ -50,7 +50,7 @@ public class GUI extends JFrame implements ActionListener {
         addToFrame();
     }
 
-    // getters
+    // getters that return the inputs in the fields
     public String getPowerStatus() {
         return powerStatusField.getText();
     }
@@ -169,9 +169,10 @@ public class GUI extends JFrame implements ActionListener {
 
         // puts dataset into predictor
         ArrayList<Features> dataset = new ArrayList<>();
+        // reads the csv file
         for (String line : fileProcessor.readFile()) {
-            String[] part = line.split(","); // splits each row into features
-            dataset.add(new Features(part[0], part[1], part[2], part[3], part[4])); // creates the feature objects
+            String[] part = line.split(","); // splits each row into individual features when there's a comma
+            dataset.add(new Features(part[0], part[1], part[2], part[3], part[4])); // creates the feature object by calling the constructor of 5 parameters (features + label), then adds it to the Alist
         }
         predictor = new Predictor(dataset);
     }

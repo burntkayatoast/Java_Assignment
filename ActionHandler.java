@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class ActionHandler extends Handler {
     // constructor
     public ActionHandler(Predictor predictor, FileProcessor fileProcessor, GUI gui) {
-        super(predictor, fileProcessor, gui);
+        super(predictor, fileProcessor, gui); //passes the parameters to the parent class. 
     }
 
     // method that handles adding new rows of data to the data set
@@ -38,6 +38,7 @@ public class ActionHandler extends Handler {
         predictor.addData(newData); // adds new data to the predictor's dataset
 
         // writes (appends) the data to the csv 
+        // initializes file writing, then adds the new data to form a row with a comma
         fileProcessor.getFileWriter();
         fileProcessor.writeLineToFile(String.join(",", powerStatus, networkSignal, activity, backgroundProcesses, deviceStatus));
         fileProcessor.closeWriteFile();
@@ -49,11 +50,13 @@ public class ActionHandler extends Handler {
 
     // method that predicts the corresponding label based on the inputted features
     public void predictionHandling() {
+        // gets the feature values from the GUI input fields
         String powerStatus = gui.getPowerStatus();
         String networkSignal = gui.getNetworkSignal();
         String activity = gui.getActivity();
         String backgroundProcesses = gui.getBackgroundProcesses();
 
+        // checks if the fields are filled
         if (powerStatus.isEmpty() || networkSignal.isEmpty() || activity.isEmpty() || backgroundProcesses.isEmpty()) {
 
             JOptionPane.showMessageDialog(gui, "Fill in the fields rat!");
@@ -81,6 +84,7 @@ public class ActionHandler extends Handler {
         // goes through the dataset and categorizes rows based on labels. Yes adds to yesRows, No adds to noRows.
         ArrayList<Features> yesRows = new ArrayList<>();
         ArrayList<Features> noRows = new ArrayList<>();
+
         for (Features row : fullDataset) {
             if (row.getDeviceIsOnline().equalsIgnoreCase("yes")) {
                 yesRows.add(row);
@@ -104,7 +108,7 @@ public class ActionHandler extends Handler {
         testingData.addAll(yesRows.subList(yesTrainSize, yesRows.size()));
         testingData.addAll(noRows.subList(noTrainSize, noRows.size()));
 
-        // train teh predictor
+        // sets the dataset the predictor uses to the training data
         predictor.setDataset(trainingData);
 
         int correctPredictions = 0;
@@ -112,7 +116,7 @@ public class ActionHandler extends Handler {
 
         // goes through each row in the testitng data
         for (Features row : testingData) {
-            // takes features of the current row in the testing dataset to make a prediction
+            // takes features of the current row in the testing dataset to make a prediction for the label
             String fullRow = predictor.predict(
                 row.getPowerStatus(), 
                 row.getNetworkSignal(), 
@@ -120,7 +124,7 @@ public class ActionHandler extends Handler {
                 row.getBackgroundProcesses()
             );
             
-            // takes the label from teh predictor
+            // takes the predicted label from the result string and gets the actual label from the dataset row
             String predictedLabel = fullRow.split(" ")[0]; // splots the prediction row where there's a space, then takes the first element (the label part) and stores it
             String actualLabel = row.getDeviceIsOnline();
             
@@ -130,7 +134,7 @@ public class ActionHandler extends Handler {
             System.out.println("Prediction: '" + fullRow + "'");
             System.out.println("Label: '" + predictedLabel + "', Actual: '" + actualLabel + "'");
             
-            // compares just the predictedlabel part with the actual label
+            // compares just the predicted label part with the actual label
             boolean isCorrect = predictedLabel.equalsIgnoreCase(actualLabel);
             System.out.println("Correct? " + isCorrect);
             
@@ -152,12 +156,14 @@ public class ActionHandler extends Handler {
         System.out.println("No rows in training: " + noTrainSize);
         System.out.println("Yes rows in testing: " + (yesRows.size() - yesTrainSize));
         System.out.println("No rows in testing: " + (noRows.size() - noTrainSize));
-
+        
+        // results of the split datasets for the yes/no labels
         System.out.println("\nProportion of 'Yes' in training: " + (yesTrainSize / (float) trainingData.size()) * 100 + "%");
         System.out.println("Proportion of 'No' in training: " + (noTrainSize / (float) trainingData.size()) * 100 + "%");
         System.out.println("Proportion of 'Yes' in testing: " + ((yesRows.size() - yesTrainSize) / (float) testingData.size()) * 100 + "%");
         System.out.println("Proportion of 'No' in testing: " + ((noRows.size() - noTrainSize) / (float) testingData.size()) * 100 + "%");
 
+        // prints the final accuracy results
         System.out.println("\n=== Prediction Accuracy ===");
         System.out.println("Correct Predictions: " + correctPredictions);
         System.out.println("Accuracy: " + accuracy + "%");

@@ -43,13 +43,13 @@ public class FileProcessor {
         ArrayList<String> lines = new ArrayList<>();
 
         try {
-            myScanner = new Scanner(file);
+            myScanner = new Scanner(file); // scanner to read the file
             boolean ifHeader = true; 
             
             // reading lines from the csv then adding it to the ArrayList
             while(myScanner.hasNextLine()) {
                 String line = myScanner.nextLine();
-                // skips the 1st row of the csv file since it's the headers
+                // skips the 1st row of the csv file since it's the headers, then adds all other lines to the list
                 if (ifHeader) {
                     ifHeader = false;
                     continue;
@@ -78,7 +78,7 @@ public class FileProcessor {
     // WRITING to file 
     public void writeLineToFile(String line) {
         System.out.println("Row added: " + line);
-        pw.println(line); 
+        pw.println(line); // writes the string to the file
     }
 
 

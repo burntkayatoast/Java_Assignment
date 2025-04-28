@@ -15,6 +15,7 @@ public class Features {
     private String DeviceIsOnline; // label
 
     // Constructor
+    // takes all five values and stores them
     public Features(String powerStatus, String networkSignal, String activity, String backgroundProcesses, String DeviceIsOnline) {
         setPowerStatus(powerStatus);
         setNetworkSignal(networkSignal);
