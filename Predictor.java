@@ -27,7 +27,7 @@ public class Predictor {
     public ArrayList<Features> getDataset() {
         return dataset;
     }
-    // method to add new row of data
+    // method to add new row (the feature object) of data
     public void addData(Features newData) {
         this.dataset.add(newData);
     }
@@ -39,9 +39,9 @@ public class Predictor {
         int noCount = 0;
         int total = 0;
         
-        // iterates through the dataset to find rows that match the given features
+        // iterates through the dataset for rows that match all inputted features
         for (Features row : dataset) {
-            // checks if the current row matches the given features 
+            // checks if the current row matches the inputted features 
             if (row.getPowerStatus().equalsIgnoreCase(powerStatus) &&  row.getNetworkSignal().equalsIgnoreCase(networkSignal) && row.getActivity().equalsIgnoreCase(activity) && row.getBackgroundProcesses().equalsIgnoreCase(backgroundProcesses)) {
                 // checking the label and incrementing the counters
                 if (row.getDeviceIsOnline().equalsIgnoreCase("yes")) {
@@ -63,17 +63,12 @@ public class Predictor {
         float probabilityYes = ((float) yesCount / total) * 100;
         float probabilityNo = ((float) noCount / total ) * 100;
 
-        // prints results
+        // prints results and probablity of the more likely outcome
         if (yesCount >= noCount) {
             System.out.println("Chances of 'DeviceIsOnline' being Yes: " + probabilityYes + "%");
-        } else {
-            System.out.println("Chances of 'DeviceIsOnline' being No: " + probabilityNo + "%");
-        }
-
-        // returns results
-        if (yesCount >= noCount) {
             return "yes " + probabilityYes + "%";
         } else {
+            System.out.println("Chances of 'DeviceIsOnline' being No: " + probabilityNo + "%");
             return "no " + probabilityNo + "%";
         }
     }
